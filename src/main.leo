@@ -59,7 +59,6 @@ program onchainml.aleo {
     }
 
     mapping layer1Store: u8 => Layer1;
-    mapping layer2Store: u8 => Layer2;
 
     transition setup_network(public layer1: Layer1, public layer2: Layer2) {
         // Just a way of directly calling finalize
