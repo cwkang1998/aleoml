@@ -61,8 +61,8 @@ def get_layer_1_body(weight: np.array, bias: np.array):
     for j in range(weight.shape[1]):
         code += f"let y{j}: field ="
         for i in range(weight.shape[0]):
-            code += f"w{i}{j} * input.value{i} + "
-        code += f"b{j};\n"
+            code += f"layer1.weights.w{i}{j} * input.value{i} + "
+        code += f"layer1.bias.b{j};\n"
     return code
 
 
@@ -99,7 +99,7 @@ def main(_):
     payload += 'weights: {'
     for i in range(w1.shape[0]):
         for j in range(w1.shape[1]):
-            payload += f"x{i}{j}: {w1[i][j]},  "
+            payload += f"w{i}{j}: {w1[i][j]},  "
     payload += '}, '
     payload += 'bias: {'
     for i in range(b1.shape[0]):
