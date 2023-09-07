@@ -91,18 +91,31 @@ program onchainml.aleo {
         return num / denom;
     }
 
+<<<<<<< HEAD
     transition inference(public input: Input, layer1: Layer1) -> field {
       let y0: field =layer1.weights.w00 * input.value0 + layer1.weights.w10 * input.value1 + layer1.weights.w20 * input.value2 + layer1.weights.w30 * input.value3 + layer1.weights.w40 * input.value4 + layer1.weights.w50 * input.value5 + layer1.weights.w60 * input.value6 + layer1.weights.w70 * input.value7 + layer1.bias.b0;
 let y1: field =layer1.weights.w01 * input.value0 + layer1.weights.w11 * input.value1 + layer1.weights.w21 * input.value2 + layer1.weights.w31 * input.value3 + layer1.weights.w41 * input.value4 + layer1.weights.w51 * input.value5 + layer1.weights.w61 * input.value6 + layer1.weights.w71 * input.value7 + layer1.bias.b1;
 let y2: field =layer1.weights.w02 * input.value0 + layer1.weights.w12 * input.value1 + layer1.weights.w22 * input.value2 + layer1.weights.w32 * input.value3 + layer1.weights.w42 * input.value4 + layer1.weights.w52 * input.value5 + layer1.weights.w62 * input.value6 + layer1.weights.w72 * input.value7 + layer1.bias.b2;
 let y3: field =layer1.weights.w03 * input.value0 + layer1.weights.w13 * input.value1 + layer1.weights.w23 * input.value2 + layer1.weights.w33 * input.value3 + layer1.weights.w43 * input.value4 + layer1.weights.w53 * input.value5 + layer1.weights.w63 * input.value6 + layer1.weights.w73 * input.value7 + layer1.bias.b3;
+=======
+    transition inference(public input: Input) -> field {
+        let y0: field =w00 * input.value0 + w10 * input.value1 + w20 * input.value2 + w30 * input.value3 + w40 * input.value4 + w50 * input.value5 + w60 * input.value6 + w70 * input.value7 + b0;
+        let y1: field =w01 * input.value0 + w11 * input.value1 + w21 * input.value2 + w31 * input.value3 + w41 * input.value4 + w51 * input.value5 + w61 * input.value6 + w71 * input.value7 + b1;
+        let y2: field =w02 * input.value0 + w12 * input.value1 + w22 * input.value2 + w32 * input.value3 + w42 * input.value4 + w52 * input.value5 + w62 * input.value6 + w72 * input.value7 + b2;
+        let y3: field =w03 * input.value0 + w13 * input.value1 + w23 * input.value2 + w33 * input.value3 + w43 * input.value4 + w53 * input.value5 + w63 * input.value6 + w73 * input.value7 + b3;
+    }
+>>>>>>> 21615f8 (add cosine_similarity)
 
         let u: Vector = Vector {
             x0: y0,
             x1: y1,
             x2: y2,
             x3: y3,
+<<<<<<< HEAD
         };
+=======
+        }
+>>>>>>> 21615f8 (add cosine_similarity)
 
         // TODO: Save this to a mapping for every user.
         let v: Vector = Vector {
@@ -110,6 +123,10 @@ let y3: field =layer1.weights.w03 * input.value0 + layer1.weights.w13 * input.va
             x1: 2field,
             x2: 3field,
             x3: 4field,
+<<<<<<< HEAD
         };
+=======
+        }
+>>>>>>> 21615f8 (add cosine_similarity)
         return cosine_similarity(u, v)
 }

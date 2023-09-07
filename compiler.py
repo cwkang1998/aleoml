@@ -99,7 +99,7 @@ def main(_):
     payload += 'weights: {'
     for i in range(w1.shape[0]):
         for j in range(w1.shape[1]):
-            payload += f"w{i}{j}: {w1[i][j]},  "
+            payload += f"x{i}{j}: {w1[i][j]},  "
     payload += '}, '
     payload += 'bias: {'
     for i in range(b1.shape[0]):
