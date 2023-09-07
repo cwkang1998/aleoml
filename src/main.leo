@@ -61,17 +61,21 @@ program onchainml.aleo {
     record Model {
         owner: address,
         layer1: Layer1,
+        voice_signature: Vector
     }
 
     mapping models: address => Layer1;
 
-    transition new_model(public layer1: Layer1) -> Model {
+    transition register_voice(public layer1: Layer1, voice_signature: Vector) -> Model {
         let model: Model = Model {
             owner: self.caller,
             layer1: layer1,
+            voice_signature
         };
         return model then finalize(self.caller, layer1);
-    } finalize new_model(owner: address, layer1: Layer1) {
+    }
+    
+    finalize register_voice(owner: address, layer1: Layer1) {
       Mapping::set(models, owner, layer1);
     }
 
@@ -97,11 +101,11 @@ program onchainml.aleo {
     }
 
     transition inference(m: Model, input: Input) -> field {
-      let layer1: Layer1 = m.layer1;
-      let y0: field =layer1.weights.w00 * input.value0 + layer1.weights.w10 * input.value1 + layer1.weights.w20 * input.value2 + layer1.weights.w30 * input.value3 + layer1.weights.w40 * input.value4 + layer1.weights.w50 * input.value5 + layer1.weights.w60 * input.value6 + layer1.weights.w70 * input.value7 + layer1.bias.b0;
-let y1: field =layer1.weights.w01 * input.value0 + layer1.weights.w11 * input.value1 + layer1.weights.w21 * input.value2 + layer1.weights.w31 * input.value3 + layer1.weights.w41 * input.value4 + layer1.weights.w51 * input.value5 + layer1.weights.w61 * input.value6 + layer1.weights.w71 * input.value7 + layer1.bias.b1;
-let y2: field =layer1.weights.w02 * input.value0 + layer1.weights.w12 * input.value1 + layer1.weights.w22 * input.value2 + layer1.weights.w32 * input.value3 + layer1.weights.w42 * input.value4 + layer1.weights.w52 * input.value5 + layer1.weights.w62 * input.value6 + layer1.weights.w72 * input.value7 + layer1.bias.b2;
-let y3: field =layer1.weights.w03 * input.value0 + layer1.weights.w13 * input.value1 + layer1.weights.w23 * input.value2 + layer1.weights.w33 * input.value3 + layer1.weights.w43 * input.value4 + layer1.weights.w53 * input.value5 + layer1.weights.w63 * input.value6 + layer1.weights.w73 * input.value7 + layer1.bias.b3;
+        let layer1: Layer1 = m.layer1;
+        let y0: field = layer1.weights.w00 * input.value0 + layer1.weights.w10 * input.value1 + layer1.weights.w20 * input.value2 + layer1.weights.w30 * input.value3 + layer1.weights.w40 * input.value4 + layer1.weights.w50 * input.value5 + layer1.weights.w60 * input.value6 + layer1.weights.w70 * input.value7 + layer1.bias.b0;
+        let y1: field = layer1.weights.w01 * input.value0 + layer1.weights.w11 * input.value1 + layer1.weights.w21 * input.value2 + layer1.weights.w31 * input.value3 + layer1.weights.w41 * input.value4 + layer1.weights.w51 * input.value5 + layer1.weights.w61 * input.value6 + layer1.weights.w71 * input.value7 + layer1.bias.b1;
+        let y2: field = layer1.weights.w02 * input.value0 + layer1.weights.w12 * input.value1 + layer1.weights.w22 * input.value2 + layer1.weights.w32 * input.value3 + layer1.weights.w42 * input.value4 + layer1.weights.w52 * input.value5 + layer1.weights.w62 * input.value6 + layer1.weights.w72 * input.value7 + layer1.bias.b2;
+        let y3: field = layer1.weights.w03 * input.value0 + layer1.weights.w13 * input.value1 + layer1.weights.w23 * input.value2 + layer1.weights.w33 * input.value3 + layer1.weights.w43 * input.value4 + layer1.weights.w53 * input.value5 + layer1.weights.w63 * input.value6 + layer1.weights.w73 * input.value7 + layer1.bias.b3;
         let u: Vector = Vector {
             x0: y0,
             x1: y1,
@@ -109,15 +113,7 @@ let y3: field =layer1.weights.w03 * input.value0 + layer1.weights.w13 * input.va
             x3: y3,
         };
 
-        // TODO: Save this to a mapping for every user.
-      let v: Vector = Vector {
-            x0: 1field,
-            x1: 2field,
-            x2: 3field,
-            x3: 4field,
-      };
-
-      return cosine_similarity(u, v);
+      return cosine_similarity(u, m.voice_signature);
 }
 
 }
